@@ -2,7 +2,6 @@ import twitter
 import maketweet
 from OAuthSettings import settings
 
-
 tweet = maketweet.tweet()
 print tweet
 
