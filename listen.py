@@ -10,6 +10,7 @@ access_token_key = settings['access_token_key']
 access_token_secret = settings['access_token_secret']
 wolfram_key = settings['wolfram_key']
 
+#sets up default arguments
 num_arg = len(sys.argv)
 if (num_arg > 1) :
 	num = int(sys.argv[1])
@@ -23,21 +24,16 @@ else:
 	num = 1
 	sleep = 10
 
+#reads last twitter message id
 f = open( 'last_msg_id.txt', 'r')
 id = f.read()
 f.close()
+
+#prepares file to write message id
 f = open( 'last_msg_id.txt', 'w')
 
+#initalize tungsten to query wolfram
 client = tungsten.Tungsten(wolfram_key)
-print client
-result = client.query('pi')
-print result
-print len(result.pods)
-print result.error
-
-for pod in result.pods:
-	print 'here'
-	print pod.title
 
 count = 0
 while (count < num) :
@@ -52,18 +48,22 @@ while (count < num) :
 
 		update = True
 		for msg in messages:
-   			print msg.text
-			print msg.id
 			if (update) :
 				id = msg.id
-				update = False;
-			api.PostDirectMessage(msg.text, screen_name=msg.sender_screen_name)
+				update = False
 			
 			result = client.query(msg.text)
+			
+			response = ''
 			for pod in result.pods:
-        			print 'here'
-        			print pod.title			
-				api.PostDirectMessage(pd.title, screen_name='milmd90')
+				response += (pod.title) + ':\n'
+				sections = pod.format['plaintext']
+				for section in sections:
+					if section is not None:
+						response += (section + '\n')
+				response += '\n'
+
+			api.PostDirectMessage(response, screen_name=msg.sender_screen_name)
 
 	except twitter.TwitterError:
 		print 'error listening!'
