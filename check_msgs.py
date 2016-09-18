@@ -27,8 +27,10 @@ while (count < num) :
 		sys.exit(1)
 
 	for msg in messages:
-		response = derek.ask(msg.text)
-		twitter_api.send_direct(response, msg.sender_screen_name)
+		user = msg.sender_screen_name
+		responses = derek.ask(msg.text, user)
+		for response in responses :
+			twitter_api.send_direct(response, user)
 
 	count = count + 1
 	if (count < num) :

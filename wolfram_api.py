@@ -1,7 +1,7 @@
 import tungsten
 from OAuthSettings import settings
 
-def ask_wolfram(msg) :
+def query(msg) :
 	#initalize tungsten to query wolfram
 	wolfram_key = settings['wolfram_key']
 	client = tungsten.Tungsten(wolfram_key)
@@ -15,5 +15,4 @@ def ask_wolfram(msg) :
 			if section is not None:
 				response += (section + '\n')
 				response += '\n'
-
 	return response
