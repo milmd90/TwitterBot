@@ -2,6 +2,7 @@ import tungsten
 from OAuthSettings import settings
 
 def query(msg) :
+	print 'Wolfram query'
 	#initalize tungsten to query wolfram
 	wolfram_key = settings['wolfram_key']
 	client = tungsten.Tungsten(wolfram_key)

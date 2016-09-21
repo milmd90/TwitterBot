@@ -28,7 +28,7 @@ while (count < num) :
 
 	for msg in messages:
 		user = msg.sender_screen_name
-		responses = derek.ask(msg.text, user)
+		responses = derek.ask(msg.id, user, msg.text)
 		for response in responses :
 			twitter_api.send_direct(response, user)
 
